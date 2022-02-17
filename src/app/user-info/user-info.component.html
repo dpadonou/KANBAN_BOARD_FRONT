@@ -1,0 +1,248 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- User informations -->
+    <div class="col-xl-8 col-lg-7">
+      <div class="card shadow mb-4">
+        <!-- Card Header -->
+        <div
+          class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+        >
+          <h6 class="m-0 font-weight-bold text-primary">User Informations</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div class="pt-4 pb-2">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="First name..."
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Last name .."
+              />
+            </div>
+            <a href="#" class="btn btn-primary btn-user btn-block"> Save </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password managment -->
+    <div class="col-xl-4 col-lg-5">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div
+          class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+        >
+          <h6 class="m-0 font-weight-bold text-primary">Password Managment</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div class="pt-4 pb-2">
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control form-control-user"
+                id="password"
+                aria-describedby="emailHelp"
+                placeholder="New Password..."
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control form-control-user"
+                id="confirmPassword"
+                aria-describedby="emailHelp"
+                placeholder="Confirm the password .."
+              />
+            </div>
+            <a href="#" class="btn btn-primary btn-user btn-block"> Save </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- My board -->
+  <div class="card shadow mb-4">
+    <div
+      class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+    >
+      <h6 class="m-0 font-weight-bold text-primary">My Boards</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <td>Name</td>
+              <td><a href="">link</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--End of my board-->
+
+  <!--Other Boards-->
+  <div class="card shadow mb-4">
+    <div
+      class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+    >
+      <h6 class="m-0 font-weight-bold text-primary">Other Boards</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <td>Name</td>
+              <td><a href="">link</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- End of other boards-->
+
+  <!-- Tasks-->
+  <div class="card shadow mb-4">
+    <div
+      class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+    >
+      <h6 class="m-0 font-weight-bold text-primary">My assigned tasks</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Libelle</th>
+              <th>created date</th>
+              <th>dead line</th>
+              <th>creator</th>
+              <th>Section</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Libelle</th>
+              <th>Created date</th>
+              <th>Dead line</th>
+              <th>Creator</th>
+              <th>Section</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <td>Tiger Nixon</td>
+              <td>System Architect</td>
+              <td>Edinburgh</td>
+              <td>61</td>
+              <td>2011/04/25</td>
+              <td>Voir plus</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- End of the tasks -->
+
+  <!-- My Created Tasks-->
+  <div class="card shadow mb-4">
+    <div
+      class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+    >
+      <h6 class="m-0 font-weight-bold text-primary">My created tasks</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Libelle</th>
+              <th>created date</th>
+              <th>dead line</th>
+              <th>Section</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Libelle</th>
+              <th>Created date</th>
+              <th>Dead line</th>
+              <th>Creator</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <td>Tiger Nixon</td>
+              <td>System Architect</td>
+              <td>Edinburgh</td>
+              <td>61</td>
+              <td>Voir plus</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- End of the created tasks -->
+</div>

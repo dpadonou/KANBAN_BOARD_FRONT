@@ -1,0 +1,93 @@
+<button class="btn btn-primary float-left" (click)="goBack()">
+  <i class="fa fa-chevron-left"></i>
+</button>
+<div class="align-items-center">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-xs-12 col-md-10 col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 15px">
+          <div class="card-body p-5">
+            <h2 class="text-uppercase text-center mb-4">Create an account</h2>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                id="name"
+                class="form-control form-control-lg"
+                placeholder="Entrez votre nom"
+              />
+              <label for="name">Your name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                id="surname"
+                placeholder="Entrez votre prénom"
+              />
+              <label for="surname">Your surname</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                id="email"
+                class="form-control form-control-lg"
+                placeholder="Enter a valid email address"
+              />
+              <label for="email">Email address</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                id="password"
+                class="form-control form-control-lg"
+                placeholder="Entrez votre mot de passe"
+              />
+              <label for="password">Password</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                id="password2"
+                class="form-control form-control-lg"
+                placeholder="Confirmez votre mot de passe"
+              />
+              <label for="password2">Repeat your password</label>
+            </div>
+
+            <div class="form-check justify-content-center mb-5">
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                value=""
+                id="form2Example3cg"
+              />
+              <label class="form-check-label" for="form2Example3g">
+                I agree all statements in
+                <a href="#!" class="text-body"><u>Terms of service</u></a>
+              </label>
+            </div>
+
+            <div class="justify-content-center">
+              <button
+                type="button"
+                class="btn btn-primary btn-block btn-lg text-body"
+              >
+                Register
+              </button>
+            </div>
+
+            <p class="text-center text-muted mt-5 mb-0">
+              Have already an account?
+              <a routerLink="/login" class="fw-bold text-body"
+                ><u>Login here</u></a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
