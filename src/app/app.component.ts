@@ -1,6 +1,9 @@
 import { Component, ElementRef, Type, ViewChild } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UserSessionService } from './service/user-session.service';
+import { User } from './entities/user';
+import { UserDto } from './entities/userDto';
+import { AuthentificationService } from './service/authentification.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +11,16 @@ import { UserSessionService } from './service/user-session.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  user_id: number = 0;
-  constructor(public modal: NgbModal, private user: UserSessionService) {}
-  ngOnInit(): void {
-    this.user.getUser().subscribe((id) => (this.user_id = id));
+  currentUser!: UserDto;
+  constructor(
+    public modal: NgbModal,
+    private authentificationService: AuthentificationService
+  ) {
+    this.authentificationService.currentUser.subscribe(
+      (user) => (this.currentUser = user)
+    );
   }
+  ngOnInit(): void {}
   title = 'kanban';
   public isMenuCollapsed = false;
   public isCollapsed = false;
@@ -49,18 +57,23 @@ export class AppComponent {
       >
         Annuler
       </button>
-      <button
-        type="button"
-        class="btn btn-danger"
-        (click)="modal.close('Ok click')"
-      >
+      <button type="button" class="btn btn-danger" (click)="logOut()">
         Valider
       </button>
     </div>
   `,
 })
 export class NgbdModalConfirm {
-  constructor(public modal: NgbActiveModal) {}
+  constructor(
+    public modal: NgbActiveModal,
+    private authentificationService: AuthentificationService,
+    private router: Router
+  ) {}
+  logOut() {
+    this.authentificationService.logout();
+    this.router.navigate(['/login']);
+    this.modal.close('Ok click');
+  }
 }
 const MODALS: { [name: string]: Type<any> } = {
   focusFirst: NgbdModalConfirm,

@@ -8,12 +8,15 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { UserSessionService } from './service/user-session.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { Page404Component } from './page404/page404.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AlertComponent } from './alert/alert.component';
+import { UserService } from './service/user.service';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -23,7 +26,8 @@ const routes: Routes = [
   { path: 'resetPassword', component: ResetPasswordComponent },
   { path: '404', component: Page404Component },
   { path: 'user', component: UserInfoComponent },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
+  //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 ];
 @NgModule({
   declarations: [
@@ -36,14 +40,18 @@ const routes: Routes = [
     ForgotPasswordComponent,
     Page404Component,
     UserInfoComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes),
   ],
-  providers: [UserSessionService],
+  providers: [UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
