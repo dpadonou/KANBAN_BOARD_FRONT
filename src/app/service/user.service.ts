@@ -44,4 +44,12 @@ export class UserService {
   public get userForgotValue(): User {
     return this.userForgot;
   }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get<any>(this.configUrl + 'user');
+  }
+
+  deleteUser(userId: number) {
+    return this.http.delete<any>(this.configUrl + 'user/' + userId);
+  }
 }

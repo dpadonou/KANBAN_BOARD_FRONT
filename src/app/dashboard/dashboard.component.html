@@ -5,8 +5,11 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
       <!-- Content Row -->
-      <div class="row overflow-auto">
-        <div class="col-xl-3 col-md-6 mb-3">
+      <div class="row overflow-auto" *ngIf="currentBoard2">
+        <div
+          class="col-xl-3 col-md-6 mb-3"
+          *ngFor="let s of currentBoard2.sections"
+        >
           <div class="card border-top-primary shadow bg-light bg-gradient">
             <div class="card-body">
               <!-- Card Header - Dropdown -->
@@ -15,56 +18,59 @@
               >
                 <h6 class="m-0 font-weight-bold text-primary">
                   <!--Titre de la section-->
-                  Titre
+                  {{ s.name }}
                 </h6>
-                <div ngbDropdown class="d-inline-block">
-                  <a id="dropdownBasic1" ngbDropdownToggle>
-                    <i class="fa fa-ellipsis-v"></i>
-                  </a>
-                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <button ngbDropdownItem (click)="open(content2)">
-                      Modifiez le titre
-                    </button>
-                    <button ngbDropdownItem>Copiez les cartes</button>
-                    <button ngbDropdownItem>Déplacez les cartes</button>
-                  </div>
-                </div>
               </div>
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="overflow-auto mb-0 f text-gray-800">
-                    <!--Debut de carte-->
-                    Carte 1
-                    <div class="card shadow mb-2">
-                      <div class="card-body">
-                        <span class="float-right">
-                          <a class="text-primary" (click)="open(content)"
-                            ><i class="fa fa-pen"></i></a
-                        ></span>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Ullam, dolore officiis quis, eius nam fuga
-                          aspernatur officia excepturi quos temporibus deleniti
-                          amet adipisci corporis. Neque assumenda repudiandae
-                          sit maiores at?
-                        </p>
+              <div class="mb-2" *ngFor="let c of s.cards">
+                <div class="overflow-auto mb-0 f text-gray-800">
+                  <!--Debut de carte-->
+                  <div class="card shadow mb-2">
+                    <div class="card-body">
+                      <span class="float-right">
                         <a
-                          (click)="open(content)"
-                          class="text-primary float-right"
-                          >Plus ...</a
+                          class="btn btn-link"
+                          (click)="updateCard(content2, c)"
                         >
-                      </div>
+                          <i class="fa fa-pen"></i>
+                        </a>
+                      </span>
+                      <p>
+                        {{ c.libelle }} <br />
+                        allocatedTime: {{ c.allocatedTime }}
+                      </p>
+
+                      <em class="float-left text-muted">
+                        {{ c.createdDate }}
+                      </em>
+                      <a
+                        (click)="updateCard(content, c)"
+                        class="text-primary float-right"
+                        >Plus ...</a
+                      >
                     </div>
-                    <!--       Fin de carte           -->
                   </div>
+                  <!--       Fin de carte           -->
                 </div>
               </div>
               <div class="mt-2">
-                <a href=""
+                <a
+                  class="btn btn-link"
+                  (click)="addCardToSection(content3, s.id)"
                   ><i class="fa fa-plus-circle"></i> Ajouter une carte</a
                 >
               </div>
             </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <button
+            class="btn-block btn btn-outline-secondary"
+            (click)="showSection = !showSection"
+          >
+            <i class="fa fa-plus"></i> Ajoutez une section
+          </button>
+          <div *ngIf="showSection">
+            <app-section></app-section>
           </div>
         </div>
       </div>
@@ -80,7 +86,7 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">
-      <!--Titre de la carte-->titre
+      {{ selectCard.libelle }}
     </h4>
     <button
       type="button"
@@ -89,21 +95,114 @@
       (click)="modal.dismiss('Cross click')"
     ></button>
   </div>
-  <div class="modal-body"></div>
+  <div class="modal-body">
+    <div>
+      <h6>Ajouter un collaborateur</h6>
+      <div class="row form-floating mb-4">
+        <select class="col" name="userForCArd" id="" [(ngModel)]="userForCard">
+          <option selected="selected" value="0">Select a user</option>
+          <option value="{{ u.id }}" *ngFor="let u of users">
+            {{ u.email }}
+          </option>
+        </select>
+        <button class="col" (click)="addUserToCard()">Valid</button>
+      </div>
+    </div>
+    <hr />
+    <h5>Update the card</h5>
+    <form [formGroup]="cardForm" (ngSubmit)="mergeCard()">
+      <div class="form-floating mb-4">
+        <input
+          formControlName="libelle"
+          type="text"
+          id="libelle"
+          class="form-control form-control-lg"
+          placeholder="Enter a card text"
+          [ngClass]="{
+            'is-invalid': submitted && f['libelle'].errors
+          }"
+        />
+        <label for="libelle">libelle</label>
+        <div *ngIf="submitted && f['libelle'].errors" class="invalid-feedback">
+          <div *ngIf="f['libelle'].errors['required']">Libelle is required</div>
+        </div>
+      </div>
+      <div class="form-floating mb-4">
+        <input
+          formControlName="deadline"
+          type="date"
+          id="deadline"
+          class="form-control form-control-lg"
+          placeholder="Choose the deadline"
+          [ngClass]="{
+            'is-invalid': submitted && f['deadline'].errors
+          }"
+        />
+        <label for="deadline">Deadline</label>
+        <div *ngIf="submitted && f['deadline'].errors" class="invalid-feedback">
+          <div *ngIf="f['deadline'].errors['required']">
+            Deadline is required
+          </div>
+        </div>
+      </div>
+      <div class="form-floating mb-4">
+        <input
+          formControlName="lieu"
+          type="text"
+          id="lieu"
+          class="form-control form-control-lg"
+          placeholder="Enter a location"
+        />
+        <label for="lieu">Lieu</label>
+      </div>
+      <div class="form-floating mb-4">
+        <input
+          formControlName="url"
+          type="text"
+          id="url"
+          class="form-control form-control-lg"
+          placeholder="Enter a url"
+        />
+        <label for="url">URL adress</label>
+      </div>
+      <div class="form-floating mb-4">
+        <textarea formControlName="note" id="note" cols="40" rows="10">
+        </textarea>
+        <label for="note">Note</label>
+      </div>
+      <div class="form-group text-center text-lg-start mt-4 pt-2">
+        <button
+          [disabled]="loading"
+          type="submit"
+          class="btn btn-primary btn-lg"
+          style="padding-left: 2.5rem; padding-right: 2.5rem"
+        >
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Modifier
+        </button>
+      </div>
+    </form>
+  </div>
   <div class="modal-footer">
     <button
       type="button"
       class="btn btn-outline-dark"
       (click)="modal.close('Save click')"
     >
-      Save
+      close
     </button>
   </div>
 </ng-template>
-<!--Modaals for update section name-->
+
+<!--Modals for update card section -->
 <ng-template #content2 let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Section update</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      Move the card to other section
+    </h4>
     <button
       type="button"
       class="btn-close"
@@ -113,13 +212,18 @@
   </div>
   <div class="modal-body">
     <div class="form-floating mb-4">
-      <input
-        type="text"
-        id="title"
-        class="form-control form-control-lg"
-        placeholder="Enter a new section name"
-      />
-      <label for="title">Section title</label>
+      <select [(ngModel)]="newCardSection" id="">
+        <option value="0">Choose the new section</option>
+        <option value="{{ s.id }}" *ngFor="let s of currentBoard2.sections">
+          {{ s.name }}
+        </option>
+      </select>
+    </div>
+    <button class="btn btn-primary" (click)="moveCard()">Move</button>
+    <hr />
+    <div>
+      <h5>Delete the card</h5>
+      <a class="btn btn-danger" (click)="deleteTheCard()">Delete</a>
     </div>
   </div>
   <div class="modal-footer">
@@ -128,7 +232,106 @@
       class="btn btn-outline-dark"
       (click)="modal.close('Save click')"
     >
-      Save
+      Close
+    </button>
+  </div>
+</ng-template>
+
+<!--Modals for create card-->
+<ng-template #content3 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create Card</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="cardForm" (ngSubmit)="createCard()">
+      <div class="form-floating mb-4">
+        <input
+          formControlName="libelle"
+          type="text"
+          id="libelle"
+          class="form-control form-control-lg"
+          placeholder="Enter a card text"
+          [ngClass]="{
+            'is-invalid': submitted && f['libelle'].errors
+          }"
+        />
+        <label for="libelle">libelle</label>
+        <div *ngIf="submitted && f['libelle'].errors" class="invalid-feedback">
+          <div *ngIf="f['libelle'].errors['required']">Libelle is required</div>
+        </div>
+      </div>
+      <div class="form-floating mb-4">
+        <input
+          formControlName="deadline"
+          type="date"
+          id="deadline"
+          class="form-control form-control-lg"
+          placeholder="Choose the deadline"
+          [ngClass]="{
+            'is-invalid': submitted && f['deadline'].errors
+          }"
+        />
+        <label for="deadline">Deadline</label>
+        <div *ngIf="submitted && f['deadline'].errors" class="invalid-feedback">
+          <div *ngIf="f['deadline'].errors['required']">
+            Deadline is required
+          </div>
+        </div>
+      </div>
+      <div class="form-floating mb-4">
+        <input
+          formControlName="lieu"
+          type="text"
+          id="lieu"
+          class="form-control form-control-lg"
+          placeholder="Enter a location"
+        />
+        <label for="lieu">Lieu</label>
+      </div>
+      <div class="form-floating mb-4">
+        <input
+          formControlName="url"
+          type="text"
+          id="url"
+          class="form-control form-control-lg"
+          placeholder="Enter a url"
+        />
+        <label for="url">URL adress</label>
+      </div>
+      <div class="form-floating mb-4">
+        <textarea formControlName="note" id="note" cols="40" rows="10">
+        </textarea>
+        <label for="note">Note</label>
+      </div>
+      <div class="form-group text-center text-lg-start mt-4 pt-2">
+        <button
+          [disabled]="loading"
+          type="submit"
+          class="btn btn-primary btn-lg"
+          style="padding-left: 2.5rem; padding-right: 2.5rem"
+        >
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Close
     </button>
   </div>
 </ng-template>

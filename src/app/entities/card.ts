@@ -1,6 +1,5 @@
 export class Card {
   id: number = 0;
-  isGitCard: boolean = false;
   libelle: String = '';
   createdDate: String = '';
   deadLine: String = '';
@@ -8,6 +7,4 @@ export class Card {
   lieu: String = '';
   url: String = '';
   note: String = '';
-  urlIssue: String = '';
-  gitHash: String = '';
 }

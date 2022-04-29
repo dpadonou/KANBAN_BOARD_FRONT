@@ -6,6 +6,4 @@ export class AddCard {
   lieu: String = '';
   url: String = '';
   note: String = '';
-  urlIssue: String = '';
-  gitHash: String = '';
 }

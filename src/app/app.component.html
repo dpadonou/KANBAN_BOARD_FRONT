@@ -2,12 +2,21 @@
   <nav id="sidebar" [ngbCollapse]="isMenuCollapsed" *ngIf="currentUser">
     <div>
       <div class="sidebar-header">
-        <h3>Nom de l'utilsateur</h3>
+        <h3>
+          <a routerLink="/dashboard"
+            >{{ currentUser.firstName }} {{ currentUser.lastName }}</a
+          >
+        </h3>
       </div>
 
       <ul class="list-unstyled components">
-        <li class="active">
+        <li>
           <a href="#homeSubmenu">Mes tableaux</a>
+          <ul>
+            <li *ngFor="let b of userBoard" class="text-uppercase">
+              <a (click)="selectBoard(b)">{{ b.title }} </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -58,77 +67,45 @@
         id="sidebarCollapse"
         class="btn btn-link rounded-circle mr-3"
       >
-        <i class="fas fa-chevron-left"></i>
+        <i class="fas fa-bars"></i>
         <span></span>
       </button>
 
-      <!-- Topbar Search -->
-      <form
-        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-      >
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control bg-light border-0 small"
-            placeholder="Search for..."
-            aria-label="Search"
-            aria-describedby="basic-addon2"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <i class="fas fa-search fa-sm"></i>
-            </button>
-          </div>
-        </div>
-      </form>
+      <div *ngIf="currentBoard" class="mr-2 ml-2">
+        <!--Current Board-->
+        <span>{{ currentBoard.title }}</span>
+      </div>
+      <app-board></app-board>
 
       <!-- Topbar Navbar -->
       <ul class="navbar-nav ml-auto">
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <!-- <li class="nav-item dropdown no-arrow d-sm-none">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="searchDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <i class="fas fa-search fa-fw"></i>
-          </a>
-          <div
-            class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-            aria-labelledby="searchDropdown"
-          >
-            <form class="form-inline mr-auto w-100 navbar-search">
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control bg-light border-0 small"
-                  placeholder="Search for..."
-                  aria-label="Search"
-                  aria-describedby="basic-addon2"
-                />
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li> -->
-
         <div class="topbar-divider d-none d-sm-block"></div>
-
+        <li class="nav-item no-arrow mx-1">
+          <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+            <button
+              type="button"
+              class="btn btn-outline-primary me-2"
+              id="dropdownManual"
+              ngbDropdownAnchor
+              (focus)="myDrop.open()"
+            >
+              My Tasks
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownManual">
+              <button ngbDropdownItem *ngFor="let c of userCards">
+                {{ c.libelle }} - {{ c.allocatedTime }}
+              </button>
+            </div>
+          </div>
+        </li>
         <!-- Nav Item - User Information -->
-        <li class="nav-item mr-5">
+        <li class="nav-item mr-5 no-arrow">
           <!-- Dropdown - User Information -->
           <div ngbDropdown>
             <a id="dropdownBasic1" ngbDropdownToggle>
               <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                ><!--Nom de l'utilisateur--></span
+                ><!--Nom de l'utilisateur-->
+                {{ currentUser.firstName }}</span
               >
               <img
                 class="img-profile rounded-circle"
@@ -160,5 +137,3 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-
-<!-- Logout Modal-->

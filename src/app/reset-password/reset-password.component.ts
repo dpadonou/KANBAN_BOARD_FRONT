@@ -54,7 +54,7 @@ export class ResetPasswordComponent implements OnInit {
     let user = new AddUser();
     let id = this.userService.userForgotValue.id;
     user.email = this.userService.userForgotValue.email;
-    user.lastName = this.userService.userForgotValue.firstName;
+    user.lastName = this.userService.userForgotValue.lastName;
     user.firstName = this.userService.userForgotValue.firstName;
     user.password = this.f['password'].value;
     this.userService
