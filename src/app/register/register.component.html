@@ -8,77 +8,144 @@
         <div class="card" style="border-radius: 15px">
           <div class="card-body p-5">
             <h2 class="text-uppercase text-center mb-4">Create an account</h2>
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                id="name"
-                class="form-control form-control-lg"
-                placeholder="Entrez votre nom"
-              />
-              <label for="name">Your name</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control form-control-lg"
-                id="surname"
-                placeholder="Entrez votre prénom"
-              />
-              <label for="surname">Your surname</label>
-            </div>
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+              <div class="form-floating mb-3">
+                <input
+                  formControlName="firstName"
+                  type="text"
+                  id="name"
+                  class="form-control form-control-lg"
+                  [ngClass]="{
+                    'is-invalid': submitted && f['firstName'].errors
+                  }"
+                  placeholder="Entrez votre nom"
+                  required
+                />
+                <label for="name">Your name</label>
+                <div
+                  *ngIf="submitted && f['firstName'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f['firstName'].errors['required']">
+                    First Name is required
+                  </div>
+                </div>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  formControlName="lastName"
+                  type="text"
+                  class="form-control form-control-lg"
+                  [ngClass]="{
+                    'is-invalid': submitted && f['lastName'].errors
+                  }"
+                  id="surname"
+                  placeholder="Entrez votre prénom"
+                  required
+                />
+                <label for="surname">Your surname</label>
+                <div
+                  *ngIf="submitted && f['lastName'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f['lastName'].errors['required']">
+                    Last Name is required
+                  </div>
+                </div>
+              </div>
 
-            <div class="form-floating mb-3">
-              <input
-                type="email"
-                id="email"
-                class="form-control form-control-lg"
-                placeholder="Enter a valid email address"
-              />
-              <label for="email">Email address</label>
-            </div>
+              <div class="form-floating mb-3">
+                <input
+                  formControlName="email"
+                  type="email"
+                  id="email"
+                  [ngClass]="{
+                    'is-invalid': submitted && f['email'].errors
+                  }"
+                  class="form-control form-control-lg"
+                  placeholder="Enter a valid email address"
+                  required
+                />
+                <label for="email">Email address</label>
+                <div
+                  *ngIf="submitted && f['email'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f['email'].errors['required']">
+                    Email is required
+                  </div>
+                  <div *ngIf="f['email'].errors['email']">
+                    Email must be a valid email address
+                  </div>
+                </div>
+              </div>
 
-            <div class="form-floating mb-3">
-              <input
-                type="password"
-                id="password"
-                class="form-control form-control-lg"
-                placeholder="Entrez votre mot de passe"
-              />
-              <label for="password">Password</label>
-            </div>
+              <div class="form-floating mb-3">
+                <input
+                  formControlName="password"
+                  type="password"
+                  id="password"
+                  class="form-control form-control-lg"
+                  [ngClass]="{
+                    'is-invalid': submitted && f['password'].errors
+                  }"
+                  placeholder="Entrez votre mot de passe"
+                  required
+                />
+                <label for="password">Password</label>
+                <div
+                  *ngIf="submitted && f['password'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f['password'].errors['required']">
+                    Password is required
+                  </div>
+                  <div *ngIf="f['password'].errors['minlength']">
+                    Password must be at least 8 characters
+                  </div>
+                </div>
+              </div>
 
-            <div class="form-floating mb-3">
-              <input
-                type="password"
-                id="password2"
-                class="form-control form-control-lg"
-                placeholder="Confirmez votre mot de passe"
-              />
-              <label for="password2">Repeat your password</label>
-            </div>
+              <div class="form-floating mb-3">
+                <input
+                  formControlName="confirmPassword"
+                  type="password"
+                  id="password2"
+                  class="form-control form-control-lg"
+                  [ngClass]="{
+                    'is-invalid': submitted && f['confirmPassword'].errors
+                  }"
+                  placeholder="Confirmez votre mot de passe"
+                  required
+                />
+                <label for="password2">Repeat your password</label>
+                <div
+                  *ngIf="submitted && f['confirmPassword'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f['confirmPassword'].errors['required']">
+                    Confirm Password is required
+                  </div>
+                  <div *ngIf="f['confirmPassword'].errors['mustMatch']">
+                    Passwords must match
+                  </div>
+                </div>
+              </div>
 
-            <div class="form-check justify-content-center mb-5">
-              <input
-                class="form-check-input me-2"
-                type="checkbox"
-                value=""
-                id="form2Example3cg"
-              />
-              <label class="form-check-label" for="form2Example3g">
-                I agree all statements in
-                <a href="#!" class="text-body"><u>Terms of service</u></a>
-              </label>
-            </div>
-
-            <div class="justify-content-center">
-              <button
-                type="button"
-                class="btn btn-primary btn-block btn-lg text-body"
-              >
-                Register
-              </button>
-            </div>
-
+              <div class="form-group justify-content-center">
+                <button
+                  [disabled]="loading"
+                  type="submit"
+                  class="btn btn-primary btn-block btn-lg text-body"
+                >
+                  <span
+                    *ngIf="loading"
+                    class="spinner-border spinner-border-sm mr-1"
+                  ></span>
+                  Register
+                </button>
+              </div>
+            </form>
             <p class="text-center text-muted mt-5 mb-0">
               Have already an account?
               <a routerLink="/login" class="fw-bold text-body"

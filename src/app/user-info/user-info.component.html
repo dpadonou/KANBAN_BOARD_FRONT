@@ -12,21 +12,60 @@
         <!-- Card Body -->
         <div class="card-body">
           <div class="pt-4 pb-2">
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="First name..."
-              />
-            </div>
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Last name .."
-              />
-            </div>
-            <a href="#" class="btn btn-primary btn-user btn-block"> Save </a>
+            <form
+              [formGroup]="updateDetailsForm"
+              (ngSubmit)="updateNameOrLastName()"
+            >
+              <div class="form-group">
+                <input
+                  formControlName="firstName"
+                  type="text"
+                  class="form-control"
+                  placeholder="First name..."
+                  [ngClass]="{
+                    'is-invalid': submitted && f1['firstName'].errors
+                  }"
+                />
+                <div
+                  *ngIf="submitted && f1['firstName'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f1['firstName'].errors['required']">
+                    First Name is required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input
+                  formControlName="lastName"
+                  type="text"
+                  class="form-control"
+                  placeholder="Last name .."
+                  [ngClass]="{
+                    'is-invalid': submitted && f1['lastName'].errors
+                  }"
+                />
+                <div
+                  *ngIf="submitted && f1['lastName'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f1['lastName'].errors['required']">
+                    Last Name is required
+                  </div>
+                </div>
+              </div>
+              <button
+                [disabled]="loading"
+                type="submit"
+                class="btn btn-primary btn-block"
+              >
+                <span
+                  *ngIf="loading"
+                  class="spinner-border spinner-border-sm mr-1"
+                ></span>
+                Save
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -44,25 +83,67 @@
         <!-- Card Body -->
         <div class="card-body">
           <div class="pt-4 pb-2">
-            <div class="form-group">
-              <input
-                type="password"
-                class="form-control form-control-user"
-                id="password"
-                aria-describedby="emailHelp"
-                placeholder="New Password..."
-              />
-            </div>
-            <div class="form-group">
-              <input
-                type="password"
-                class="form-control form-control-user"
-                id="confirmPassword"
-                aria-describedby="emailHelp"
-                placeholder="Confirm the password .."
-              />
-            </div>
-            <a href="#" class="btn btn-primary btn-user btn-block"> Save </a>
+            <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+              <div class="form-group">
+                <input
+                  formControlName="password"
+                  type="password"
+                  class="form-control form-control-user"
+                  id="password"
+                  aria-describedby="emailHelp"
+                  placeholder="New Password..."
+                  [ngClass]="{
+                    'is-invalid': submitted2 && f2['password'].errors
+                  }"
+                />
+                <div
+                  *ngIf="submitted2 && f2['password'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f2['password'].errors['required']">
+                    Password is required
+                  </div>
+                  <div *ngIf="f2['password'].errors['minlength']">
+                    Password must be at least 8 characters
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input
+                  formControlName="confirmPassword"
+                  type="password"
+                  class="form-control form-control-user"
+                  id="confirmPassword"
+                  aria-describedby="emailHelp"
+                  placeholder="Confirm the password .."
+                  [ngClass]="{
+                    'is-invalid': submitted2 && f2['confirmPassword'].errors
+                  }"
+                />
+                <div
+                  *ngIf="submitted2 && f2['confirmPassword'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f2['confirmPassword'].errors['required']">
+                    Confirm Password is required
+                  </div>
+                  <div *ngIf="f2['confirmPassword'].errors['mustMatch']">
+                    Passwords must match
+                  </div>
+                </div>
+              </div>
+              <button
+                [disabled]="loading2"
+                type="submit"
+                class="btn btn-primary btn-block text-body"
+              >
+                <span
+                  *ngIf="loading2"
+                  class="spinner-border spinner-border-sm mr-1"
+                ></span>
+                Save
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -87,19 +168,16 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tfoot>
             <tr>
               <th>Name</th>
-              <th>Action</th>
             </tr>
           </tfoot>
           <tbody>
-            <tr>
-              <td>Name</td>
-              <td><a href="">link</a></td>
+            <tr *ngFor="let b of currentUser.boardCreer">
+              <td>{{ b.title }}</td>
             </tr>
           </tbody>
         </table>
@@ -107,45 +185,6 @@
     </div>
   </div>
   <!--End of my board-->
-
-  <!--Other Boards-->
-  <div class="card shadow mb-4">
-    <div
-      class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-    >
-      <h6 class="m-0 font-weight-bold text-primary">Other Boards</h6>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table
-          class="table table-bordered"
-          id="dataTable"
-          width="100%"
-          cellspacing="0"
-        >
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <th>Name</th>
-              <th>Action</th>
-            </tr>
-          </tfoot>
-          <tbody>
-            <tr>
-              <td>Name</td>
-              <td><a href="">link</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <!-- End of other boards-->
 
   <!-- Tasks-->
   <div class="card shadow mb-4">
@@ -167,9 +206,6 @@
               <th>Libelle</th>
               <th>created date</th>
               <th>dead line</th>
-              <th>creator</th>
-              <th>Section</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tfoot>
@@ -177,19 +213,13 @@
               <th>Libelle</th>
               <th>Created date</th>
               <th>Dead line</th>
-              <th>Creator</th>
-              <th>Section</th>
-              <th>Action</th>
             </tr>
           </tfoot>
           <tbody>
-            <tr>
-              <td>Tiger Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>2011/04/25</td>
-              <td>Voir plus</td>
+            <tr *ngFor="let c of currentUser.tachesAssigner">
+              <td>{{ c.libelle }}</td>
+              <td>{{ c.createdDate }}</td>
+              <td>{{ c.deadLine }}</td>
             </tr>
           </tbody>
         </table>
@@ -218,8 +248,6 @@
               <th>Libelle</th>
               <th>created date</th>
               <th>dead line</th>
-              <th>Section</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tfoot>
@@ -227,17 +255,13 @@
               <th>Libelle</th>
               <th>Created date</th>
               <th>Dead line</th>
-              <th>Creator</th>
-              <th>Action</th>
             </tr>
           </tfoot>
           <tbody>
-            <tr>
-              <td>Tiger Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>Voir plus</td>
+            <tr *ngFor="let c of currentUser.tachesCreer">
+              <td>{{ c.libelle }}</td>
+              <td>{{ c.createdDate }}</td>
+              <td>{{ c.deadLine }}</td>
             </tr>
           </tbody>
         </table>
@@ -245,4 +269,17 @@
     </div>
   </div>
   <!-- End of the created tasks -->
+
+  <!-- Delete user -->
+  <!--<div class="card shadow mb-4">
+    <div
+      class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+    >
+      <h6 class="m-0 font-weight-bold text-primary">Delete User</h6>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-danger" (click)="deleteUser()">Delete</button>
+    </div>
+  </div> -->
+  <!--End of delete user -->
 </div>

@@ -1,7 +1,6 @@
-export class User {
-  id: number = 0;
-  firstName: String = '';
+export class AddUser {
   lastName: String = '';
+  firstName: String = '';
   email: String = '';
   password: String = '';
 }

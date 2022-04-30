@@ -1,0 +1,87 @@
+<div class="card border-top-primary shadow bg-light bg-gradient">
+  <div class="card-body">
+    <div class="row no-gutters align-items-center">
+      <div class="col mr-2">
+        <div class="overflow-auto mb-0 f text-gray-800" *ngIf="sections">
+          <!--Debut de carte-->
+          Select the sections that you like
+          <div class="card shadow mb-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6 ml-2" *ngFor="let s of sections">
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    [value]="s.id"
+                    (change)="addtoSelectSection($event)"
+                    id="{{ s.name }}"
+                  />
+                  <label class="form-check-label" for="{{ s.name }}">
+                    {{ s.name }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--       Fin de carte           -->
+        </div>
+      </div>
+    </div>
+    <div class="mt-2">
+      <a class="btn btn-link" (click)="open(content)"
+        ><i class="fa fa-plus-circle"></i> New Section</a
+      >
+    </div>
+  </div>
+</div>
+<button class="btn btn-primary btn-block" (click)="addSectionToCurrentBoard()">
+  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+  Save
+</button>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Section</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="dateOfBirth">Section name</label>
+        <div class="input-group">
+          <input
+            type="text"
+            id="dateOfBirth"
+            class="form-control"
+            name="sectionName"
+            placeholder="Enter the section name"
+            [(ngModel)]="newSectionName"
+          />
+          <button
+            class="btn btn-outline-secondary calendar"
+            (click)="addSection()"
+            type="button"
+          >
+            Valid
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>
+
+<hr />
