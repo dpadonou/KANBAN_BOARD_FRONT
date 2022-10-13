@@ -1,4 +1,4 @@
-# Kanban
+# Kanban board simulator (Frontend version)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
 
@@ -15,6 +15,6 @@ Run `ng generate component component-name` to generate a new component. You can 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 
-##Run the api before run the kanban board app
+## Run the api before run the kanban board app
 
-Run the api at the gitlab repository `https://gitlab.istic.univ-rennes1.fr/dpadonou/tp2_sir.git`
+Run the api at the gitlab repository `https://github.com/dpadonou/KANBAN_BOARD_BACK`
